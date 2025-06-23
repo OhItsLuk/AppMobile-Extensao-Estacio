@@ -13,9 +13,12 @@ export const API_CONFIG = {
     LOGOUT: "/auth/logout",
     REFRESH_TOKEN: "/auth/refresh",
 
-    // Produtos (para futura integração)
-    PRODUCTS: "/api/products",
-    PRODUCT_BY_ID: (id: string) => `/api/products/${id}`,
+    // Produtos
+    PRODUCTS: "/api/produtos",
+    PRODUCTS_CREATE: "/api/Produtos",
+    PRODUCT_BY_ID: (id: string) => `/api/produtos/${id}`,
+    PRODUCT_UPDATE: (id: string) => `/api/produtos/${id}`,
+    PRODUCT_DELETE: (id: string) => `/api/produtos/${id}`,
 
     // Health check
     HEALTH: "/health",
@@ -30,5 +33,13 @@ export const API_CONFIG = {
   DEV: {
     ENABLE_LOGS: true,
     MOCK_DATA: false, // Se true, usa dados locais mesmo com API
+    USE_API: true, // Se false, usa apenas AsyncStorage
+  },
+
+  // Configurações de paginação
+  PAGINATION: {
+    DEFAULT_PAGE: 1,
+    DEFAULT_PAGE_SIZE: 50, // Aumentado para pegar mais produtos por padrão
+    MAX_PAGE_SIZE: 100,
   },
 };

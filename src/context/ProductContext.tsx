@@ -11,12 +11,14 @@ type CreateProductData = {
   name: string;
   description?: string;
   quantity: number;
+  price: number;
 };
 
 type UpdateProductData = {
   name?: string;
   description?: string;
   quantity?: number;
+  price?: number;
 };
 
 type ProductContextData = {
@@ -47,8 +49,9 @@ export function ProductProvider({ children }: ProductProviderProps) {
   const refreshProducts = async () => {
     setLoading(true);
     try {
-      const fetchedProducts = await productService.getProducts();
+      const fetchedProducts = await productService.getAllProducts();
       setProducts(fetchedProducts);
+      console.log("✅ Produtos carregados:", fetchedProducts.length);
     } catch (error) {
       console.error("Erro ao carregar produtos:", error);
     } finally {

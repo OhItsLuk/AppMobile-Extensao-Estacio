@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -6,19 +6,21 @@ import {
   TextInput,
   TouchableOpacity,
   Alert,
-  SafeAreaView,
   ScrollView,
   KeyboardAvoidingView,
   Platform,
   StatusBar,
 } from "react-native";
-import { useRouter } from "expo-router";
+import { useRouter, useLocalSearchParams } from "expo-router";
 import { useProducts } from "../../../src/context/ProductContext";
+import { Product } from "../../../src/services/productService";
 
-export default function AddProductScreen() {
+export default function EditProductScreen() {
   const router = useRouter();
-  const { createProduct } = useProducts();
+  const { id } = useLocalSearchParams<{ id: string }>();
+  const { products, updateProduct } = useProducts();
 
+  const [product, setProduct] = useState<Product | null>(null);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [quantity, setQuantity] = useState("");
@@ -29,6 +31,23 @@ export default function AddProductScreen() {
     quantity: "",
     price: "",
   });
+
+  useEffect(() => {
+    if (id) {
+      const foundProduct = products.find((p) => p.id === id);
+      if (foundProduct) {
+        setProduct(foundProduct);
+        setName(foundProduct.name);
+        setDescription(foundProduct.description || "");
+        setQuantity(foundProduct.quantity.toString());
+        setPrice(foundProduct.price.toFixed(2).replace(".", ","));
+      } else {
+        Alert.alert("Erro", "Produto não encontrado", [
+          { text: "OK", onPress: () => router.back() },
+        ]);
+      }
+    }
+  }, [id, products]);
 
   const validateForm = () => {
     const newErrors = {
@@ -75,8 +94,8 @@ export default function AddProductScreen() {
     return cleanText;
   };
 
-  const handleSaveProduct = async () => {
-    if (!validateForm()) {
+  const handleUpdateProduct = async () => {
+    if (!validateForm() || !product) {
       return;
     }
 
@@ -84,33 +103,36 @@ export default function AddProductScreen() {
     try {
       const numericPrice = parseFloat(price.replace(",", "."));
 
-      await createProduct({
+      await updateProduct(product.id, {
         name: name.trim(),
         description: description.trim() || undefined,
         quantity: parseInt(quantity),
         price: numericPrice,
       });
 
-      Alert.alert("Sucesso", "Produto cadastrado com sucesso!", [
+      Alert.alert("Sucesso", "Produto atualizado com sucesso!", [
         {
           text: "OK",
           onPress: () => router.back(),
         },
       ]);
     } catch (error) {
-      Alert.alert("Erro", "Não foi possível cadastrar o produto");
+      Alert.alert("Erro", "Não foi possível atualizar o produto");
     } finally {
       setLoading(false);
     }
   };
 
-  const resetForm = () => {
-    setName("");
-    setDescription("");
-    setQuantity("");
-    setPrice("");
-    setErrors({ name: "", quantity: "", price: "" });
-  };
+  if (!product) {
+    return (
+      <View style={styles.container}>
+        <StatusBar barStyle="light-content" backgroundColor="#1565C0" />
+        <View style={styles.loadingContainer}>
+          <Text>Carregando produto...</Text>
+        </View>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -127,7 +149,7 @@ export default function AddProductScreen() {
           >
             <Text style={styles.backButtonText}>← Voltar</Text>
           </TouchableOpacity>
-          <Text style={styles.title}>Novo Produto</Text>
+          <Text style={styles.title}>Editar Produto</Text>
           <View style={styles.placeholder} />
         </View>
 
@@ -220,9 +242,8 @@ export default function AddProductScreen() {
 
             <View style={styles.infoBox}>
               <Text style={styles.infoText}>
-                💡 <Text style={styles.infoBold}>Dica:</Text> Os campos marcados
-                com * são obrigatórios. O produto será cadastrado no estoque e
-                você poderá editá-lo posteriormente.
+                📝 <Text style={styles.infoBold}>Editando:</Text> Todas as
+                alterações serão sincronizadas com o servidor automaticamente.
               </Text>
             </View>
           </View>
@@ -230,20 +251,20 @@ export default function AddProductScreen() {
 
         <View style={styles.footer}>
           <TouchableOpacity
-            style={styles.resetButton}
-            onPress={resetForm}
+            style={styles.cancelButton}
+            onPress={() => router.back()}
             disabled={loading}
           >
-            <Text style={styles.resetButtonText}>Limpar</Text>
+            <Text style={styles.cancelButtonText}>Cancelar</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             style={[styles.saveButton, loading && styles.saveButtonDisabled]}
-            onPress={handleSaveProduct}
+            onPress={handleUpdateProduct}
             disabled={loading}
           >
             <Text style={styles.saveButtonText}>
-              {loading ? "Salvando..." : "Salvar Produto"}
+              {loading ? "Salvando..." : "Salvar Alterações"}
             </Text>
           </TouchableOpacity>
         </View>
@@ -260,6 +281,11 @@ const styles = StyleSheet.create({
   },
   keyboardAvoidingView: {
     flex: 1,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
   header: {
     flexDirection: "row",
@@ -351,14 +377,14 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   infoBox: {
-    backgroundColor: "#E3F2FD",
+    backgroundColor: "#E8F5E8",
     padding: 16,
     borderRadius: 8,
     marginTop: 10,
   },
   infoText: {
     fontSize: 14,
-    color: "#1976D2",
+    color: "#2E7D32",
     lineHeight: 20,
   },
   infoBold: {
@@ -374,7 +400,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
   },
-  resetButton: {
+  cancelButton: {
     flex: 1,
     backgroundColor: "#fff",
     borderWidth: 1,
@@ -384,20 +410,20 @@ const styles = StyleSheet.create({
     marginRight: 10,
     alignItems: "center",
   },
-  resetButtonText: {
+  cancelButtonText: {
     color: "#666",
     fontSize: 16,
     fontWeight: "600",
   },
   saveButton: {
     flex: 2,
-    backgroundColor: "#4CAF50",
+    backgroundColor: "#2196F3",
     borderRadius: 8,
     padding: 14,
     alignItems: "center",
   },
   saveButtonDisabled: {
-    backgroundColor: "#A5D6A7",
+    backgroundColor: "#BBDEFB",
   },
   saveButtonText: {
     color: "#fff",
