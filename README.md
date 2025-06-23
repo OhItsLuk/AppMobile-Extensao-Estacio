@@ -135,7 +135,7 @@ Após executar o comando acima:
 🔗 Links Importantes
 
 📲 Repositório do App Mobile:
-[AppMobile-Extensao-Estacio](https://github.com/OhItsLuk/AppMobile-API/)
+[API](https://github.com/OhItsLuk/AppMobile-API/)
 
 📝 Roteiro de Extensão:
 [Clique para acessar](https://liveestacio-my.sharepoint.com/:w:/g/personal/202303956932_alunos_estacio_br/EfjGNx3v5pJJrV7F9dYBuAEBw5zyNMkZqtBN5HPv0qAT_w?e=LkPnfz)
