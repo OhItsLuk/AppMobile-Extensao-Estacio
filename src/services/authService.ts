@@ -1,16 +1,13 @@
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
-const API_URL = "https://api.seuservidor.com";
+import { API_CONFIG } from "../config/apiConfig";
 
 const TOKEN_KEY = "@AuthToken";
 const USER_KEY = "@AuthUser";
 
 const api = axios.create({
-  baseURL: API_URL,
-  headers: {
-    "Content-Type": "application/json",
-  },
+  baseURL: API_CONFIG.BASE_URL,
+  headers: API_CONFIG.DEFAULT_HEADERS,
 });
 
 api.interceptors.request.use(
@@ -25,17 +22,45 @@ api.interceptors.request.use(
 );
 
 export const authService = {
+  // Função para testar conexão com a API
+  testConnection: async () => {
+    try {
+      const response = await api.get(API_CONFIG.ENDPOINTS.HEALTH);
+      console.log("✅ Conexão com API estabelecida:", response.status);
+      return true;
+    } catch (error) {
+      console.log("❌ Erro de conexão com API:", error);
+      return false;
+    }
+  },
   signIn: async (email: string, password: string) => {
     try {
-      const response = await api.post("/auth/login", { email, password });
-      const { token, user } = response.data;
+      // Endpoint: /api/auth/login
+      // Body: { Email, Senha } conforme UsuarioLoginDto
+      const response = await api.post(API_CONFIG.ENDPOINTS.LOGIN, {
+        Email: email,
+        Senha: password,
+      });
+
+      const { token } = response.data;
 
       await AsyncStorage.setItem(TOKEN_KEY, token);
-      await AsyncStorage.setItem(USER_KEY, JSON.stringify(user));
+
+      // Como não retorna dados do usuário, vamos criar um objeto básico
+      const userData = {
+        id: "user_id", // Será obtido do token ou outra chamada futuramente
+        name: "Usuário", // Nome padrão por enquanto
+        email: email,
+      };
+      await AsyncStorage.setItem(USER_KEY, JSON.stringify(userData));
 
       return true;
     } catch (error) {
       console.error("Erro ao fazer login:", error);
+      if (error.response) {
+        console.error("Status:", error.response.status);
+        console.error("Data:", error.response.data);
+      }
       return false;
     }
   },
@@ -63,16 +88,6 @@ export const authService = {
 
   getToken: async () => {
     return await AsyncStorage.getItem(TOKEN_KEY);
-  },
-
-  register: async (userData: any) => {
-    try {
-      const response = await api.post("/auth/register", userData);
-      return response.data;
-    } catch (error) {
-      console.error("Erro ao registrar:", error);
-      throw error;
-    }
   },
 };
 

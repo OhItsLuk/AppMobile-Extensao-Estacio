@@ -11,7 +11,8 @@ import { useEffect } from "react";
 import "react-native-reanimated";
 
 import { useColorScheme } from "@/components/useColorScheme";
-import { AuthProvider, useAuth } from "./context/AuthContext";
+import { AuthProvider, useAuth } from "../src/context/AuthContext";
+import { ProductProvider } from "../src/context/ProductContext";
 
 export { ErrorBoundary } from "expo-router";
 
@@ -31,9 +32,9 @@ function AuthRoot() {
       const inAuthGroup = segments[0] === "(auth)";
 
       if (!isLoggedIn && !inAuthGroup) {
-        router.replace("/login");
+        router.replace("/views/Login");
       } else if (isLoggedIn && inAuthGroup) {
-        router.replace("/views");
+        router.replace("/views/Home");
       }
     }
   }, [isLoggedIn, loading, segments]);
@@ -63,7 +64,9 @@ export default function RootLayout() {
 
   return (
     <AuthProvider>
-      <AuthRoot />
+      <ProductProvider>
+        <AuthRoot />
+      </ProductProvider>
     </AuthProvider>
   );
 }
@@ -76,8 +79,6 @@ function RootLayoutNav() {
       <Stack>
         <Stack.Screen name="views" options={{ headerShown: false }} />
         <Stack.Screen name="modal" options={{ presentation: "modal" }} />
-        <Stack.Screen name="login" options={{ headerShown: false }} />
-        <Stack.Screen name="register" options={{ title: "Cadastro" }} />
       </Stack>
     </ThemeProvider>
   );

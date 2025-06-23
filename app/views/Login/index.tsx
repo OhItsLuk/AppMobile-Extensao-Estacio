@@ -8,7 +8,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { useRouter } from "expo-router";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../../src/context/AuthContext";
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
@@ -31,7 +31,7 @@ export default function LoginScreen() {
     try {
       const success = await signIn(email, password);
       if (success) {
-        router.replace("/Views/Home");
+        router.replace("/views/Home");
       } else {
         setError("Credenciais inválidas");
       }
@@ -79,13 +79,6 @@ export default function LoginScreen() {
         ) : (
           <Text style={styles.buttonText}>Entrar</Text>
         )}
-      </TouchableOpacity>
-
-      <TouchableOpacity onPress={() => router.push("/Views/Register")}>
-        <Text style={styles.registerText}>
-          Não tem uma conta?{" "}
-          <Text style={styles.registerLink}>Cadastre-se</Text>
-        </Text>
       </TouchableOpacity>
     </View>
   );
@@ -138,13 +131,5 @@ const styles = StyleSheet.create({
     color: "red",
     marginBottom: 15,
     textAlign: "center",
-  },
-  registerText: {
-    textAlign: "center",
-    color: "#666",
-  },
-  registerLink: {
-    color: "#1E88E5",
-    fontWeight: "bold",
   },
 });
