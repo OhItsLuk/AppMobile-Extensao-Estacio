@@ -131,7 +131,6 @@ Após executar o comando acima:
 - Listagem de Produtos: Visualização com indicadores de estoque baixo
 - Cadastro de Produtos: Formulário para adicionar novos itens
 - Edição de Quantidades: Atualização rápida via modal
-- Dados de Exemplo: Produtos pré-cadastrados para demonstração
 
 🔗 Links Importantes
 
