@@ -24,12 +24,16 @@ Banco de Dados:
 
 PostgreSQL
 
-🔗 Repositórios e Documentos
-📦 API (.NET 8.0): https://github.com/OhItsLuk/AppMobile-API
+🔗 Links Importantes
 
-📝 Roteiro de Extensão: [Clique para acessar](https://liveestacio-my.sharepoint.com/:w:/g/personal/202303956932_alunos_estacio_br/Eb_sR-6qagRCnPlI8hN6X2sBBgL4BDVXdkSnNtqeiWKJ-Q?e=ccAdW8)
+📲 Repositório do App Mobile:
+[AppMobile-Extensao-Estacio](https://github.com/OhItsLuk/AppMobile-API/)
 
-📄 Carta de Apresentação: [Clique para acessar](https://liveestacio-my.sharepoint.com/:w:/g/personal/202303956932_alunos_estacio_br/Eb_sR-6qagRCnPlI8hN6X2sBBgL4BDVXdkSnNtqeiWKJ-Q?e=ccAdW8)
+📝 Roteiro de Extensão:
+[Clique para acessar](https://liveestacio-my.sharepoint.com/:w:/g/personal/202303956932_alunos_estacio_br/EfjGNx3v5pJJrV7F9dYBuAEBw5zyNMkZqtBN5HPv0qAT_w?e=LkPnfz)
+
+📄 Carta de Apresentação:
+[Clique para acessar](https://liveestacio-my.sharepoint.com/:w:/g/personal/202303956932_alunos_estacio_br/Eb_sR-6qagRCnPlI8hN6X2sBBgL4BDVXdkSnNtqeiWKJ-Q?e=ccAdW8)
 
 👨‍💻 Equipe dos Alunos Desenvolvedores
 
