@@ -1,5 +1,5 @@
-📱 Projeto de Extensão — Aplicativo de Gestão para Microempreendedores
-Este é um projeto de Extensão Universitária voltado ao desenvolvimento mobile, com foco no apoio ao microempreendedorismo local. Através deste aplicativo, buscamos oferecer uma ferramenta simples, acessível e eficaz para o controle e a gestão de pequenos negócios, promovendo autonomia e organização para empreendedores da comunidade.
+Projeto de Extensão — Aplicativo Mobile para Microempreendedores
+Este repositório contém o aplicativo mobile desenvolvido como parte de um Projeto de Extensão Universitária, com o objetivo de apoiar o microempreendedorismo local. Através do app, microempreendedores têm acesso a uma ferramenta prática e acessível para gestão e controle de seus negócios.
 
 🚀 Tecnologias Utilizadas
 Back-end (API):
