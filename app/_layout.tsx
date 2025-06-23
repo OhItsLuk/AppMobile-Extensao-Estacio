@@ -9,7 +9,6 @@ import { Stack, useRouter, useSegments } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import "react-native-reanimated";
-import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import { useColorScheme } from "@/components/useColorScheme";
 import { AuthProvider, useAuth } from "../src/context/AuthContext";
@@ -64,13 +63,11 @@ export default function RootLayout() {
   }
 
   return (
-    <SafeAreaProvider>
-      <AuthProvider>
-        <ProductProvider>
-          <AuthRoot />
-        </ProductProvider>
-      </AuthProvider>
-    </SafeAreaProvider>
+    <AuthProvider>
+      <ProductProvider>
+        <AuthRoot />
+      </ProductProvider>
+    </AuthProvider>
   );
 }
 

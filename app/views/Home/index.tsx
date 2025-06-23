@@ -6,6 +6,8 @@ import {
   TouchableOpacity,
   SafeAreaView,
   Alert,
+  StatusBar,
+  Platform,
 } from "react-native";
 import { useAuth } from "../../../src/context/AuthContext";
 import { useRouter } from "expo-router";
@@ -66,7 +68,9 @@ export default function HomeScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
+      <StatusBar barStyle="light-content" backgroundColor="#1565C0" />
+
       <View style={styles.header}>
         <Text style={styles.title}>PSIT - Controle de Estoque</Text>
         <Text style={styles.welcome}>
@@ -119,10 +123,12 @@ export default function HomeScreen() {
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity style={styles.logoutButton} onPress={signOut}>
-        <Text style={styles.logoutButtonText}>Sair</Text>
-      </TouchableOpacity>
-    </SafeAreaView>
+      <View style={styles.footer}>
+        <TouchableOpacity style={styles.logoutButton} onPress={signOut}>
+          <Text style={styles.logoutButtonText}>Sair</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
   );
 }
 
@@ -130,33 +136,38 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#f5f5f5",
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
   header: {
-    padding: 20,
+    paddingHorizontal: 20,
+    paddingVertical: 20,
     backgroundColor: "#1E88E5",
     alignItems: "center",
   },
   title: {
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: "bold",
     color: "#fff",
-    marginBottom: 8,
+    marginBottom: 6,
+    textAlign: "center",
   },
   welcome: {
-    fontSize: 16,
+    fontSize: 15,
     color: "#fff",
     opacity: 0.9,
+    textAlign: "center",
   },
   menuContainer: {
     flex: 1,
-    padding: 20,
-    justifyContent: "center",
+    paddingHorizontal: 20,
+    paddingTop: 20,
+    paddingBottom: 10,
   },
   menuButton: {
     backgroundColor: "#fff",
-    padding: 20,
+    padding: 16,
     borderRadius: 12,
-    marginBottom: 16,
+    marginBottom: 12,
     elevation: 3,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
@@ -164,20 +175,20 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
   },
   menuButtonText: {
-    fontSize: 20,
+    fontSize: 17,
     fontWeight: "bold",
     color: "#333",
-    marginBottom: 4,
+    marginBottom: 3,
   },
   menuButtonSubtext: {
-    fontSize: 14,
+    fontSize: 13,
     color: "#666",
   },
   sampleButton: {
     backgroundColor: "#FFF8E1",
-    padding: 20,
+    padding: 16,
     borderRadius: 12,
-    marginBottom: 16,
+    marginBottom: 12,
     elevation: 2,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
@@ -187,21 +198,21 @@ const styles = StyleSheet.create({
     borderColor: "#FFD54F",
   },
   sampleButtonText: {
-    fontSize: 18,
+    fontSize: 15,
     fontWeight: "bold",
     color: "#F57C00",
-    marginBottom: 4,
+    marginBottom: 3,
   },
   sampleButtonSubtext: {
-    fontSize: 14,
+    fontSize: 12,
     color: "#F57C00",
     opacity: 0.8,
   },
   apiButton: {
     backgroundColor: "#E8F5E8",
-    padding: 20,
+    padding: 16,
     borderRadius: 12,
-    marginBottom: 16,
+    marginBottom: 12,
     elevation: 2,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
@@ -211,33 +222,21 @@ const styles = StyleSheet.create({
     borderColor: "#4CAF50",
   },
   apiButtonText: {
-    fontSize: 18,
+    fontSize: 15,
     fontWeight: "bold",
     color: "#2E7D32",
-    marginBottom: 4,
+    marginBottom: 3,
   },
   apiButtonSubtext: {
-    fontSize: 14,
+    fontSize: 12,
     color: "#2E7D32",
     opacity: 0.8,
   },
-  logoutButton: {
-    backgroundColor: "#f44336",
-    margin: 20,
-    padding: 16,
-    borderRadius: 8,
-    alignItems: "center",
-  },
-  logoutButtonText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
   debugButton: {
     backgroundColor: "#F3E5F5",
-    padding: 20,
+    padding: 16,
     borderRadius: 12,
-    marginBottom: 16,
+    marginBottom: 12,
     elevation: 2,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
@@ -247,14 +246,34 @@ const styles = StyleSheet.create({
     borderColor: "#BA68C8",
   },
   debugButtonText: {
-    fontSize: 18,
+    fontSize: 15,
     fontWeight: "bold",
     color: "#7B1FA2",
-    marginBottom: 4,
+    marginBottom: 3,
   },
   debugButtonSubtext: {
-    fontSize: 14,
+    fontSize: 12,
     color: "#7B1FA2",
     opacity: 0.8,
+  },
+  footer: {
+    paddingHorizontal: 20,
+    paddingBottom: 20,
+  },
+  logoutButton: {
+    backgroundColor: "#f44336",
+    padding: 14,
+    borderRadius: 8,
+    alignItems: "center",
+    elevation: 2,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+  },
+  logoutButtonText: {
+    color: "#fff",
+    fontSize: 15,
+    fontWeight: "bold",
   },
 });
