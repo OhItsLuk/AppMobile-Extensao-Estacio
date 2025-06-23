@@ -1,6 +1,9 @@
 // Configurações da API
 export const API_CONFIG = {
-  // URL base da API
+  // Para teste, use um endpoint público
+  // BASE_URL: "https://jsonplaceholder.typicode.com",
+
+  // Seu backend local
   BASE_URL: "http://10.0.2.2:5136",
 
   // Endpoints

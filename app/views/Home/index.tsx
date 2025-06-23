@@ -34,14 +34,34 @@ export default function HomeScreen() {
 
   const handleTestAPI = async () => {
     try {
+      console.log("🔍 Iniciando teste de API...");
       const isConnected = await authService.testConnection();
       if (isConnected) {
         Alert.alert("✅ API", "Conexão com servidor estabelecida!");
       } else {
-        Alert.alert("❌ API", "Servidor não está respondendo");
+        Alert.alert(
+          "❌ API",
+          "Servidor não está respondendo. Verifique se o backend está rodando na porta 5136."
+        );
       }
     } catch (error) {
-      Alert.alert("❌ API", "Erro ao conectar com servidor");
+      console.error("Erro no teste:", error);
+      Alert.alert("❌ API", `Erro ao conectar: ${error.message}`);
+    }
+  };
+
+  const handleTestFetch = async () => {
+    try {
+      console.log("🔍 Testando com fetch...");
+      const isConnected = await authService.testWithFetch();
+      if (isConnected) {
+        Alert.alert("✅ Fetch", "Fetch nativo funcionou!");
+      } else {
+        Alert.alert("❌ Fetch", "Fetch nativo falhou");
+      }
+    } catch (error) {
+      console.error("Erro no teste fetch:", error);
+      Alert.alert("❌ Fetch", `Erro: ${error.message}`);
     }
   };
 
@@ -85,9 +105,16 @@ export default function HomeScreen() {
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.apiButton} onPress={handleTestAPI}>
-          <Text style={styles.apiButtonText}>🔗 Testar API</Text>
+          <Text style={styles.apiButtonText}>🔗 Testar API (Axios)</Text>
           <Text style={styles.apiButtonSubtext}>
             Verificar conexão com servidor
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.debugButton} onPress={handleTestFetch}>
+          <Text style={styles.debugButtonText}>🧪 Testar API (Fetch)</Text>
+          <Text style={styles.debugButtonSubtext}>
+            Teste alternativo de conectividade
           </Text>
         </TouchableOpacity>
       </View>
@@ -205,5 +232,29 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
     fontWeight: "bold",
+  },
+  debugButton: {
+    backgroundColor: "#F3E5F5",
+    padding: 20,
+    borderRadius: 12,
+    marginBottom: 16,
+    elevation: 2,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 2,
+    borderWidth: 1,
+    borderColor: "#BA68C8",
+  },
+  debugButtonText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#7B1FA2",
+    marginBottom: 4,
+  },
+  debugButtonSubtext: {
+    fontSize: 14,
+    color: "#7B1FA2",
+    opacity: 0.8,
   },
 });
