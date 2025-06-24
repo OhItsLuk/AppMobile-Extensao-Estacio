@@ -134,6 +134,9 @@ Após executar o comando acima:
 
 🔗 Links Importantes
 
+📷 Vídeo do Aplicativo (Em sua versão inicial, apenas CRUD de produtos) rodando:
+[Vídeo](https://youtu.be/GFuTi5qD7gs)
+
 📲 Repositório do App Mobile:
 [API](https://github.com/OhItsLuk/AppMobile-API/)
 
